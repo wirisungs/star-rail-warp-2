@@ -11,6 +11,7 @@ import CreditsModal from "./modals/CreditsModal";
 import PhonoModal from "./modals/PhonoModal";
 import LangModal from "./modals/LangModal";
 import { useTranslation } from "react-i18next";
+import soundService from "./services/SoundService";
 
 const Settings = ({
   vers,
@@ -30,26 +31,14 @@ const Settings = ({
 
   const handleClose = () => {
     setShowSettings(false);
-    if (sound) playMenuClose();
+    if (sound) soundService.playSound('menu-close');
   };
-  const handleShow = () => setShowSettings(true);
+  const handleShow = () => {
+    setShowSettings(true);
+    if (sound) soundService.playSound('menu-open');
+  };
 
-  const { sound, setSound, setContinueSound, useSound } =
-    useContext(SoundContext);
-
-  const [playMenuOpen] = useSound("../assets/audio/sfx/menu-open.mp3");
-
-  const [playMenuClose] = useSound("../assets/audio/sfx/menu-close.mp3");
-
-  const [playMenuSelect] = useSound("../assets/audio/sfx/menu-select.mp3");
-
-  const [playButtonSelect] = useSound(
-    "../assets/audio/sfx/menu-button-select.mp3"
-  );
-
-  const [playPageOpen] = useSound("../assets/audio/sfx/page-open.mp3"); // eslint-disable-line no-unused-vars
-
-  const [playLoadDB] = useSound("../assets/audio/sfx/db-load.mp3");
+  const { sound, setSound, setContinueSound } = useContext(SoundContext);
 
   const [showReset, setShowReset] = useState(false);
 
@@ -64,7 +53,7 @@ const Settings = ({
   const handleDBSelect = (type) => {
     setDBType(type);
     setContent("data-bank");
-    if (sound) playLoadDB();
+    if (sound) soundService.playSound('db-load');
   };
 
   const { i18n } = useTranslation();
@@ -81,7 +70,7 @@ const Settings = ({
   useEffect(() => {
     function handleKeyDown({ keyCode }) {
       if (keyCode === 27 && !showSettings && !showDB && !showStart) {
-        if (sound) playMenuSelect();
+        if (sound) soundService.playSound('menu-select');
         setShowSettings(true);
       }
     }
@@ -91,7 +80,7 @@ const Settings = ({
     return function cleanup() {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [showSettings, showDB, sound, playMenuSelect, showStart]);
+  }, [showSettings, showDB, sound, showStart]);
 
   return (
     <React.Fragment>
@@ -103,7 +92,7 @@ const Settings = ({
         width={getWidth(33, 18)}
         onClick={() => {
           handleShow();
-          if (sound) playMenuSelect();
+          if (sound) soundService.playSound('menu-select');
         }}
         draggable="false"
       />
@@ -140,7 +129,7 @@ const Settings = ({
           width: getWidth(450, 200),
         }}
         onEntering={() => {
-          if (sound) setTimeout(() => playMenuOpen(), 200);
+          if (sound) setTimeout(() => soundService.playSound('menu-open'), 200);
         }}
       >
         <Offcanvas.Header>
@@ -179,7 +168,7 @@ const Settings = ({
               draggable="false"
               width={getWidth(114, 50)}
               onClick={() => {
-                if (sound) playButtonSelect();
+                if (sound) soundService.playSound('button-select');
                 setShowVersion(true);
               }}
             />
@@ -191,7 +180,7 @@ const Settings = ({
               draggable="false"
               width={getWidth(114, 50)}
               onClick={() => {
-                if (sound) playButtonSelect();
+                if (sound) soundService.playSound('button-select');
                 setShowDB(true);
               }}
             />
@@ -203,7 +192,7 @@ const Settings = ({
               draggable="false"
               width={getWidth(114, 50)}
               onClick={() => {
-                if (sound) playButtonSelect();
+                if (sound) soundService.playSound('button-select');
                 setShowPhono(true);
               }}
             />
@@ -227,7 +216,7 @@ const Settings = ({
               draggable="false"
               width={getWidth(114, 50)}
               onClick={() => {
-                playButtonSelect();
+                soundService.playSound('button-select');
                 setSound(!sound);
                 setContinueSound(!sound);
               }}
@@ -240,7 +229,7 @@ const Settings = ({
               draggable="false"
               width={getWidth(114, 50)}
               onClick={() => {
-                if (sound) playButtonSelect();
+                if (sound) soundService.playSound('button-select');
                 setShowReset(true);
               }}
             />
@@ -252,19 +241,10 @@ const Settings = ({
               draggable="false"
               width={getWidth(114, 50)}
               onClick={() => {
-                if (sound) playButtonSelect();
+                if (sound) soundService.playSound('button-select');
                 setShowLang(true);
               }}
             />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              width: "100%",
-            }}
-          >
             <LazyLoadImage
               effect="opacity"
               alt="Credits Button"
@@ -273,7 +253,7 @@ const Settings = ({
               draggable="false"
               width={getWidth(114, 50)}
               onClick={() => {
-                if (sound) playButtonSelect();
+                if (sound) soundService.playSound('button-select');
                 setShowCredits(true);
               }}
             />

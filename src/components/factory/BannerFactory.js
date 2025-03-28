@@ -1,5 +1,7 @@
 import { RateCalculator, RateStrategyFactory } from '../strategy/RateStrategy';
 import bannerObserver from '../observer/BannerObserver';
+import bannerRepository from '../repository/BannerRepository';
+import { BannerDecoratorFactory } from '../decorator/BannerDecorator';
 
 class Banner {
   constructor(config) {
@@ -49,22 +51,31 @@ class Banner {
   // Methods to update banner state
   updatePityFive(value) {
     this.pityFive = value;
+    this.saveState();
     this.notifyObservers();
   }
 
   updatePityFour(value) {
     this.pityFour = value;
+    this.saveState();
     this.notifyObservers();
   }
 
   updateGuaranteeFive(value) {
     this.guaranteeFive = value;
+    this.saveState();
     this.notifyObservers();
   }
 
   updateGuaranteeFour(value) {
     this.guaranteeFour = value;
+    this.saveState();
     this.notifyObservers();
+  }
+
+  // Save state to repository
+  saveState() {
+    bannerRepository.saveBannerState(this.type, this.getConfig());
   }
 
   // Method to notify observers of state changes
@@ -80,66 +91,42 @@ class Banner {
 
 class BeginnerBanner extends Banner {
   constructor() {
+    const state = bannerRepository.loadBannerState('beginner');
     super({
       type: 'beginner',
-      rateFive: parseInt(localStorage.getItem("begRateFive")) || 0.006,
-      rateFour: parseInt(localStorage.getItem("begRateFour")) || 0.051,
-      maxPity: parseInt(localStorage.getItem("begHardPity")) || 50,
-      softPity: parseInt(localStorage.getItem("begSoftPity")) || 50,
-      guaranteeFive: localStorage.getItem("begGuaranteeFive") === "true",
-      guaranteeFour: localStorage.getItem("begGuaranteeFour") === "true",
-      pityFive: parseInt(localStorage.getItem("begPityFive")) || 0,
-      pityFour: parseInt(localStorage.getItem("begPityFour")) || 0
+      ...state
     });
   }
 }
 
 class CharacterBanner extends Banner {
   constructor() {
+    const state = bannerRepository.loadBannerState('char');
     super({
       type: 'char',
-      rateFive: parseInt(localStorage.getItem("charRateFive")) || 0.006,
-      rateFour: parseInt(localStorage.getItem("charRateFour")) || 0.051,
-      maxPity: parseInt(localStorage.getItem("charHardPity")) || 90,
-      softPity: parseInt(localStorage.getItem("charSoftPity")) || 75,
-      guaranteeFive: localStorage.getItem("charGuaranteeFive") === "true",
-      guaranteeFour: localStorage.getItem("charGuaranteeFour") === "true",
-      pityFive: parseInt(localStorage.getItem("charPityFive")) || 0,
-      pityFour: parseInt(localStorage.getItem("charPityFour")) || 0
+      ...state
     });
   }
 }
 
 class WeaponBanner extends Banner {
   constructor() {
+    const state = bannerRepository.loadBannerState('weap');
     super({
       type: 'weap',
-      rateFive: parseInt(localStorage.getItem("weapRateFive")) || 0.008,
-      rateFour: parseInt(localStorage.getItem("weapRateFour")) || 0.066,
-      maxPity: parseInt(localStorage.getItem("weapHardPity")) || 80,
-      softPity: parseInt(localStorage.getItem("weapSoftPity")) || 65,
-      guaranteeFive: localStorage.getItem("weapGuaranteeFive") === "true",
-      guaranteeFour: localStorage.getItem("weapGuaranteeFour") === "true",
-      pityFive: parseInt(localStorage.getItem("weapPityFive")) || 0,
-      pityFour: parseInt(localStorage.getItem("weapPityFour")) || 0
+      ...state
     });
   }
 }
 
 class StandardBanner extends Banner {
   constructor() {
+    const state = bannerRepository.loadBannerState('standard');
     super({
       type: 'standard',
-      rateFive: parseInt(localStorage.getItem("standRateFive")) || 0.006,
-      rateFour: parseInt(localStorage.getItem("standRateFour")) || 0.051,
-      maxPity: parseInt(localStorage.getItem("standHardPity")) || 90,
-      softPity: parseInt(localStorage.getItem("standSoftPity")) || 75,
-      guaranteeFive: localStorage.getItem("standGuaranteeFive") === "true",
-      guaranteeFour: localStorage.getItem("standGuaranteeFour") === "true",
-      pityFive: parseInt(localStorage.getItem("standPityFive")) || 0,
-      pityFour: parseInt(localStorage.getItem("standPityFour")) || 0
+      ...state
     });
-    this.typeCount = parseInt(localStorage.getItem("standardTypeCount")) || 0;
+    this.typeCount = state.typeCount;
   }
 
   getConfig() {
@@ -148,22 +135,37 @@ class StandardBanner extends Banner {
       typeCount: this.typeCount
     };
   }
+
+  updateTypeCount(value) {
+    this.typeCount = value;
+    this.saveState();
+    this.notifyObservers();
+  }
 }
 
 class BannerFactory {
-  static createBanner(type) {
+  static createBanner(type, options = { animated: true, sound: true, logged: false }) {
+    let banner;
+
     switch (type) {
       case 'beginner':
-        return new BeginnerBanner();
+        banner = new BeginnerBanner();
+        break;
       case 'char':
-        return new CharacterBanner();
+        banner = new CharacterBanner();
+        break;
       case 'weap':
-        return new WeaponBanner();
+        banner = new WeaponBanner();
+        break;
       case 'standard':
-        return new StandardBanner();
+        banner = new StandardBanner();
+        break;
       default:
         throw new Error(`Invalid banner type: ${type}`);
     }
+
+    // Apply decorators based on options
+    return BannerDecoratorFactory.createDecoratedBanner(banner, options);
   }
 }
 
