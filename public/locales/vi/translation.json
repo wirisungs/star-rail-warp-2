@@ -1,0 +1,111 @@
+{
+  "main": {
+    "title": "Bước Nhảy"
+  },
+  "modal": {
+    "lang": { "title": "Chọn ngôn ngữ của bạn" },
+    "reset": {
+      "title": "Đặt lại dữ liệu",
+      "body": "Thao tác này sẽ xóa vĩnh viễn tất cả dữ liệu của bạn. Bạn có chắc không?"
+    },
+    "credits": {
+      "title": "Credits",
+      "body1": "Hầu hết tài sản thuộc về Mihoyo và được lấy từ Honkai Star Rail và chỉnh sửa.",
+      "body2": "Một số biểu tượng được cung cấp bởi",
+      "body3": "Một số nghệ thuật nhân vật được cung cấp bởi"
+    },
+    "vers": {
+      "title": "Chọn phiên bản của bạn",
+      "vers": "Phiên bản",
+      "event1": "Bước Nhảy Sự Kiện Nhân Vật",
+      "event2": "Bước Nhảy Sự Kiện Nón Ánh Sáng"
+    },
+    "rate": {
+      "title": {
+        "char": "Tăng Tỷ Lệ Xuất Hiện Nhân Vật",
+        "weap": "Tăng Tỷ Lệ Xuất Hiện Nón Ánh Sáng",
+        "rerun-char": "Tăng Tỷ Lệ Xuất Hiện Nhân Vật",
+        "rerun-weap": "Tăng Tỷ Lệ Xuất Hiện Nón Ánh Sáng",
+        "reruns-char": "Tăng Tỷ Lệ Xuất Hiện Nhân Vật",
+        "reruns-weap": "Tăng Tỷ Lệ Xuất Hiện Nón Ánh Sáng"
+      },
+      "rate5": "Tăng Tỷ Lệ Xuất Hiện: 5 Sao",
+      "rate4": "Tăng Tỷ Lệ Xuất Hiện: 4 Sao"
+    },
+    "phono": {
+      "title": "Máy Hát"
+    },
+    "default": {
+      "title": "Đặt thành Mặc định",
+      "body": "Thao tác này sẽ đặt cài đặt sợi dọc thành giá trị mặc định. Bạn có chắc không?"
+    }
+  },
+  "db": {
+    "title": "Kho Lưu Trữ",
+    "type1": "Nón Ánh Sáng",
+    "type2": "Nhân Vật",
+    "indexed": "Đă thu thập",
+    "not-indexed": "Chưa thu thập"
+  },
+  "button": {
+    "close": "Đóng",
+    "cancel": "Hủy bỏ",
+    "confirm": "Xác nhận",
+    "reset": "Cài lại",
+    "exchange": "Đổi Cửa Hàng",
+    "view-details": "Xem Chi Tiết",
+    "phono": "Chọn nhạc",
+    "current": "Bài Hiện Tại",
+    "records": "Lịch Sử",
+    "default": "Mặc định",
+    "stats": "Số liệu thống kê",
+    "sound": "âm thanh"
+  },
+  "banner": {
+    "beg": {
+      "title": "Bước Nhảy Đầu Tiên",
+      "remaining": "Số lần cờn lại",
+      "text": "10 lần giảm 20%, trong <1>50</1> lần Bước Nhảy chắc chắn nhận được nhân vật <1>5</1> sao"
+    },
+    "char": {
+      "text1": "Mỗi <1>10</1> lần Bước Nhảy chắc chắn nhận đối tượng <1>4</1> sao trở lên",
+      "text2": "Tăng tỷ lệ xuất hiện Nhân Vật chỉ định"
+    },
+    "weap": {
+      "text1": "Mỗi <1>10</1> lần Bước Nhảy chắc chắn nhận đối tượng <1>4</1> sao trở lên",
+      "text2": "Tăng tỷ lệ xuất hiện Nón Ánh Sáng chỉ định"
+    },
+    "reruns": {
+      "text1": "Nhấn vào thẻ trang để chuyển đổi giữa các Bước Nhảy khác nhau",
+      "text2": "Mỗi <1>10</1> lần Bước Nhảy chắc chắn nhận đối tượng <1>4</1> sao trở lên"
+    }
+  },
+  "table": {
+    "entity-type": "Loại đối tượng",
+    "entity-name": "Tên đối tượng",
+    "warp-type": "Loại Bước Nhảy",
+    "warp-time": "Thời gian Bước Nhảy",
+    "char": "Nhân Vật",
+    "weap": "Nón Ánh Sáng",
+    "none": "Không có dữ liệu",
+    "tag1": "Đối Tượng Tăng Tỷ Lệ Xuất Hiện",
+    "tag2": "Danh Sách Đối Tượng",
+    "drop1": "Tỷ lệ Bước Nhảy cơ bản 5 sao thành công là:",
+    "drop2": "Tỷ lệ Bước Nhảy cơ bản 4 sao thành công là:",
+    "list1": "Tỷ lệ cơ bản ra đối tượng 5 sao:",
+    "list2": "Tỷ lệ cơ bản ra đối tượng 4 sao:",
+    "list3": "Tỷ lệ cơ bản ra đối tượng 3 sao:",
+    "guarantee": "(Có bảo hiểm:"
+  },
+  "stats": {
+    "rateFive": "Xác suất 5 sao",
+    "rateFour": "Xác suất 4 sao",
+    "maxPity": "Giới hạn cứng 5 sao",
+    "softPity": "Giới hạn mềm 5 sao",
+    "pityFive": "Giới hạn 5 sao hiện tại",
+    "pityFour": "Giới hạn 4 sao hiện tại",
+    "guaranteeFive": "Đảm bảo nổi bật 5 sao",
+    "guaranteeFour": "Đảm bảo nổi bật 4 sao",
+    "total": "Tổng cộng"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "main": {
+    "title": "Warp"
+  },
+  "modal": {
+    "lang": { "title": "Wähle deine Sprache" },
+    "reset": {
+      "title": "Daten zurücksetzen",
+      "body": "Dadurch werden alle Ihre Daten dauerhaft zurückgesetzt. Bist du dir sicher?"
+    },
+    "credits": {
+      "title": "Credits",
+      "body1": "Die meisten Assets gehören Mihoyo und wurden aus Honkai Star Rail übernommen und bearbeitet.",
+      "body2": "Einige Symbole bereitgestellt von:",
+      "body3": "Einige Charakterzeichnungen bereitgestellt von:"
+    },
+    "vers": {
+      "title": "Wähle deine Version",
+      "vers": "Ausführung",
+      "event1": "Figuren-Aktionswarp",
+      "event2": "Lichtkegel-Aktionswarp"
+    },
+    "rate": {
+      "title": {
+        "char": "Figuren mit höherer Chance",
+        "weap": "Lichtkegel mit höherer Chance",
+        "rerun-char": "Figuren mit höherer Chance",
+        "rerun-weap": "Lichtkegel mit höherer Chance",
+        "reruns-char": "Figuren mit höherer Chance",
+        "reruns-weap": "Lichtkegel mit höherer Chance"
+      },
+      "rate5": "Erhöhte Chance: 5 Sterne",
+      "rate4": "Erhöhte Chance: 4 Sterne"
+    },
+    "phono": {
+      "title": "Grammophon"
+    },
+    "default": {
+      "title": "Auf Standard setzen",
+      "body": "Dadurch werden die Warp-Einstellungen auf die Standardwerte gesetzt. Bist du dir sicher?"
+    }
+  },
+  "db": {
+    "title": "Datenbank",
+    "type1": "Lichtkegel",
+    "type2": "Figuren",
+    "indexed": "Gesammelt",
+    "not-indexed": "Nicht gesammelt"
+  },
+  "button": {
+    "close": "Schließen",
+    "cancel": "Stornieren",
+    "confirm": "Bestätigen",
+    "reset": "Zurücksetzen",
+    "exchange": "Zum Shop",
+    "view-details": "Details ansehen",
+    "phono": "Musik auswählen",
+    "current": "Aktuelles Lied",
+    "records": "Aufzeichnungen",
+    "default": "Standard",
+    "stats": "Statistiken",
+    "sound": "Klang"
+  },
+  "banner": {
+    "beg": {
+      "title": "Starwarp",
+      "remaining": "Verbleibende Warps",
+      "text": "20 % Rabatt bei 10 Warps und innerhalb von <1>50</1> Warps erhältst du garantiert eine <1>5</1>-Sterne-Figur."
+    },
+    "char": {
+      "text1": "Je <1>10</1> Warps erhältst du garantiert ein Objekt mit <1>4</1> oder mehr Sternen",
+      "text2": "Erhöhte Chance zum Erhalt bestimmter Figuren"
+    },
+    "weap": {
+      "text1": "Je <1>10</1> Warps erhältst du garantiert ein Objekt mit <1>4</1> oder mehr Sternen",
+      "text2": "Erhöhte Chance zum Erhalt bestimmter Lichtkegel"
+    },
+    "reruns": {
+      "text1": "Klicke auf die Tabs, um zu einem anderen Warp zu wechseln.",
+      "text2": "Je <1>10</1> Warps erhältst du garantiert en Objekt mit <1>4</1> oder mehr Sternen."
+    }
+  },
+  "table": {
+    "entity-type": "Objekttyp",
+    "entity-name": "Objektname",
+    "warp-type": "Warptyp",
+    "warp-time": "Warpzeit",
+    "char": "Figur",
+    "weap": "Lichtkegel",
+    "none": "Keine Daten",
+    "tag1": "Erhöhung der Chance",
+    "tag2": "Objekliste",
+    "drop1": "Chance für das Aktionsobjekt bei einem 5-Sterne-Warp-Erfolg:",
+    "drop2": "Chance für das Aktionsobjekt bei einem 4-Sterne-Warp-Erfolg:",
+    "list1": "Allg. 5-Sterne-Objekt-Erfolgschance:",
+    "list2": "Allg. 4-Sterne-Objekt-Erfolgschance:",
+    "list3": "Allg. 3-Sterne-Objekt-Erfolgschance:",
+    "guarantee": "(inkl. Garantie:"
+  },
+  "stats": {
+    "rateFive": "Wahrscheinlichkeit 5-Sterne",
+    "rateFour": "Wahrscheinlichkeit 4-Sterne",
+    "maxPity": "5-Sterne-Hard-Limit",
+    "softPity": "5-Sterne-Soft-Limit",
+    "pityFive": "Aktuelles 5-Sterne-Limit",
+    "pityFour": "Aktuelles 4-Sterne-Limit",
+    "guaranteeFive": "Garantierte 5-Sterne-Bewertung",
+    "guaranteeFour": "Garantierte 4-Sterne-Bewertung",
+    "total": "Gesamt"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "main": {
+    "title": "跃迁"
+  },
+  "modal": {
+    "lang": { "title": "选择语言" },
+    "reset": {
+      "title": "重置数据",
+      "body": "这将永久擦除您的所有数据。你确定吗？"
+    },
+    "credits": {
+      "title": "鸣谢",
+      "body1": "大多数资产属于米哈游, 取自崩坏星穹铁道并进行了编辑.",
+      "body2": "部分图标由",
+      "body3": "部分角色美术由"
+    },
+    "vers": {
+      "title": "选您的版本",
+      "vers": "版本",
+      "event1": "角色事件",
+      "event2": "武器事件"
+    },
+    "rate": {
+      "title": {
+        "char": "概率提升角色",
+        "weap": "概率提升光锥",
+        "rerun-char": "概率提升角色",
+        "rerun-weap": "概率提升光锥",
+        "reruns-char": "概率提升角色",
+        "reruns-weap": "概率提升光锥"
+      },
+      "rate5": "概率提升: 5星",
+      "rate4": "概率提升: 4星"
+    },
+    "phono": {
+      "title": "留声机"
+    },
+    "default": {
+      "title": "设置为默认值",
+      "body": "这会将扭曲设置设置为默认值。你确定吗？"
+    }
+  },
+  "db": {
+    "title": "智库",
+    "type1": "光锥",
+    "type2": "角色",
+    "indexed": "已收录",
+    "not-indexed": "未收录"
+  },
+  "button": {
+    "close": "关",
+    "cancel": "取消",
+    "confirm": "确认",
+    "reset": "重置",
+    "exchange": "商店兑换",
+    "view-details": "查看详情",
+    "phono": "选择音乐",
+    "current": "当前曲目",
+    "records": "历史记录",
+    "default": "默认",
+    "stats": "统计数据",
+    "sound": "声音"
+  },
+  "banner": {
+    "beg": {
+      "title": "始发跃迁",
+      "remaining": "剩余次数",
+      "text": "十连8折, <1>50</1>次跃迁内必得<1>5</1>星角色."
+    },
+    "char": {
+      "text1": "每<1>10</1>次跃迁必出<1>4</1>星或以上对象",
+      "text2": "指定角色出现概率提升"
+    },
+    "weap": {
+      "text1": "每<1>10</1>次跃迁必出<1>4</1>星或以上对象",
+      "text2": "指定光锥出现概率提升"
+    },
+    "reruns": {
+      "text1": "点击页签切换不同跃迁",
+      "text2": "每<1>10</1>次跃迁必出<1>4</1>星或以上对象"
+    }
+  },
+  "table": {
+    "entity-type": "对象类型",
+    "entity-name": "对象名称",
+    "warp-type": "跃迁类型",
+    "warp-time": "跃迁时间",
+    "char": "角色",
+    "weap": "光锥",
+    "none": "暂无数据",
+    "tag1": "概率提升对象",
+    "tag2": "对象清单",
+    "drop1": "占5星基础跃迁成功概率的:",
+    "drop2": "占4星基础跃迁成功概率的:",
+    "list1": "5星对象基础跃迁成功概率:",
+    "list2": "4星对象基础跃迁成功概率:",
+    "list3": "3星对象基础跃迁成功概率:",
+    "guarantee": "(含保底综合跃迁成功概率:"
+  },
+  "stats": {
+    "rateFive": "概率5星",
+    "rateFour": "概率4星",
+    "maxPity": "5星最高限额",
+    "softPity": "5星软限制",
+    "pityFive": "当前 5 星限制",
+    "pityFour": "当前 4 星限制",
+    "guaranteeFive": "保证精选 5 星",
+    "guaranteeFour": "保证精选 4 星",
+    "total": "全部"
+  }
+}

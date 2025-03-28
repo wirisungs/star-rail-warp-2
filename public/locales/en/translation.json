@@ -1,0 +1,111 @@
+{
+  "main": {
+    "title": "Warp"
+  },
+  "modal": {
+    "lang": { "title": "Choose Your Language" },
+    "reset": {
+      "title": "Reset Data",
+      "body": "This will permanently reset all your data. Are you sure?"
+    },
+    "credits": {
+      "title": "Credits",
+      "body1": "Most assets belong to Mihoyo and were taken from in Honkai Star Rail and edited.",
+      "body2": "Some icons provided by:",
+      "body3": "Some character art provided by:"
+    },
+    "vers": {
+      "title": "Choose Your Banner Version",
+      "vers": "Version",
+      "event1": "Character Event Warp",
+      "event2": "Light Cone Event Warp"
+    },
+    "rate": {
+      "title": {
+        "char": "Drop Rate Boosted Characters",
+        "weap": "Drop-Rate Boost: Light Cones",
+        "rerun-char": "Drop Rate Boosted Characters",
+        "rerun-weap": "Drop-Rate Boost: Light Cones",
+        "reruns-char": "Drop Rate Boosted Characters",
+        "reruns-weap": "Drop-Rate Boost: Light Cones"
+      },
+      "rate5": "Boosted Drop Rate: 5-star",
+      "rate4": "Boosted Drop Rate: 4-star"
+    },
+    "phono": {
+      "title": "Phonograph"
+    },
+    "default": {
+      "title": "Set to Default",
+      "body": "This will set the warp settings to default values. Are you sure?"
+    }
+  },
+  "db": {
+    "title": "Data Bank",
+    "type1": "Light Cones",
+    "type2": "Characters",
+    "indexed": "Indexed",
+    "not-indexed": "Not Indexed"
+  },
+  "button": {
+    "close": "Close",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "reset": "Reset",
+    "exchange": "Exchange",
+    "view-details": "View Details",
+    "phono": "Set Music",
+    "current": "Current Song",
+    "records": "Records",
+    "default": "Default",
+    "stats": "Stats",
+    "sound": "Sound"
+  },
+  "banner": {
+    "beg": {
+      "title": "Departure Warp",
+      "remaining": "Remaining Warps",
+      "text": "20% off for set of 10 Warps, and a <1>5</1>-star character is guaranteed within <1>50</1> Warps."
+    },
+    "char": {
+      "text1": "Every <1>10</1> Warps guarantees a <1>4</1>-star or above entity",
+      "text2": "Featured character receives a drop-rate boost"
+    },
+    "weap": {
+      "text1": "Every <1>10</1> Warps guarantees a <1>4</1>-star or above entity",
+      "text2": "Featured Light Cone receives a drop-rate boost"
+    },
+    "reruns": {
+      "text1": "Click tabs to switch between different Warp banners",
+      "text2": "Every <1>10</1> Warps guarantees a <1>4</1>-star or above entity"
+    }
+  },
+  "table": {
+    "entity-type": "Entity Type",
+    "entity-name": "Entity Name",
+    "warp-type": "Warp Type",
+    "warp-time": "Warp Time",
+    "char": "Character",
+    "weap": "Light Cone",
+    "none": "No record",
+    "tag1": "Drop-Rate Boost Entities",
+    "tag2": "Entity List",
+    "drop1": "Drop Rate (out of 5-star entities):",
+    "drop2": "Drop Rate (out of 4-star entities):",
+    "list1": "5-star entity base Warp rate:",
+    "list2": "4-star entity base Warp rate:",
+    "list3": "3-star entity base Warp rate:",
+    "guarantee": "(Incl. guarantee:"
+  },
+  "stats": {
+    "rateFive": "Probability 5 Star",
+    "rateFour": "Probability 4 Star",
+    "maxPity": "5 Star Hard Pity",
+    "softPity": "5 Star Soft Pity",
+    "pityFive": "Current 5 Star Pity",
+    "pityFour": "Current 4 Star Pity",
+    "guaranteeFive": "Guaranteed Featured 5 Star",
+    "guaranteeFour": "Guaranteed Featured 4 Star",
+    "total": "Total"
+  }
+}

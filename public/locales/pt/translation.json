@@ -1,0 +1,111 @@
+{
+  "main": {
+    "title": "Salto Hiperespacial"
+  },
+  "modal": {
+    "lang": { "title": "Escolha seu idioma" },
+    "reset": {
+      "title": "Redefinir dados",
+      "body": "Isso redefinirá permanentemente todos os seus dados. Tem certeza?"
+    },
+    "credits": {
+      "title": "Credits",
+      "body1": "A maioria dos ativos pertence a Mihoyo e foi retirada do Honkai Star Rail e editada.",
+      "body2": "Alguns ícones fornecidos por:",
+      "body3": "Algumas artes de personagens fornecidas por:"
+    },
+    "vers": {
+      "title": "Escolha sua versão",
+      "vers": "Versão",
+      "event1": "Salto Hiperespacial de Evento de Personagem",
+      "event2": "Salto Hiperespacial de Evento de Cone de Luz"
+    },
+    "rate": {
+      "title": {
+        "char": "Taxa de Obtenção Aumentada: Personagens",
+        "weap": "Taxa de Obtenção Aumentada: Cones de Luz",
+        "rerun-char": "Taxa de Obtenção Aumentada: Personagens",
+        "rerun-weap": "Taxa de Obtenção Aumentada: Cones de Luz",
+        "reruns-char": "Taxa de Obtenção Aumentada: Personagens",
+        "reruns-weap": "Taxa de Obtenção Aumentada: Cones de Luz"
+      },
+      "rate5": "Taxa de Obtenção Aumentada: 5 Estrelas",
+      "rate4": "Taxa de Obtenção Aumentada: 4 Estrelas"
+    },
+    "phono": {
+      "title": "Fonógrafo"
+    },
+    "default": {
+      "title": "Definido como padrão",
+      "body": "Isso definirá as configurações de salto para seus valores padrão. Tem certeza?"
+    }
+  },
+  "db": {
+    "title": "Banco de Dados",
+    "type1": "Cones de Luz",
+    "type2": "Personagens",
+    "indexed": "Indexado",
+    "not-indexed": "Não Indexado"
+  },
+  "button": {
+    "close": "Fechar",
+    "cancel": "Cancelar",
+    "confirm": "Confirme",
+    "reset": "Reiniciar",
+    "exchange": "Troca",
+    "view-details": "Detalhes",
+    "phono": "Selecione a música",
+    "current": "Música Atual",
+    "records": "Históricos",
+    "default": "Padrão",
+    "stats": "Estatísticos",
+    "sound": "Som"
+  },
+  "banner": {
+    "beg": {
+      "title": "Salto Hiperespacial de Partida",
+      "remaining": "Saltos Hiperespaciais restantes",
+      "text": "Conjuntos de 10 Saltos Hiperespaciais com 20% de desconto e um personagem <1>5</1> estrelas é garantido em até <1>50</1> Saltos Hiperespaciais."
+    },
+    "char": {
+      "text1": "Cada <1>10</1> Saltos Hiperespaciais garantem uma entidade de <1>4</1> estrelas ou mais",
+      "text2": "Personagens promocionais receberão um aumento de taxa de obtenção"
+    },
+    "weap": {
+      "text1": "Cada <1>10</1> Saltos Hiperespaciais garantem uma entidade de <1>4</1> estrelas ou mais",
+      "text2": "Cones de Luz promocionais recebem um aumento de taxa de obtenção"
+    },
+    "reruns": {
+      "text1": "Clique nas abas para trocar para um banner de Salto Hiperespacial diferente",
+      "text2": "Cada <1>10</1> Saltos Hiperespaciais garantem uma entidade de <1>4</1> estrelas ou mais."
+    }
+  },
+  "table": {
+    "entity-type": "Tipo do item",
+    "entity-name": "Nome do item",
+    "warp-type": "Tipo de Salto Hyperspatial",
+    "warp-time": "Hora",
+    "char": "Personagens",
+    "weap": "Cones de Luz",
+    "none": "Sem dados",
+    "tag1": "Itens com Probabilidade Aumentada",
+    "tag2": "Lista de Itens",
+    "drop1": "Probabilidade do item de 5 estrelas ser um item promocional:",
+    "drop2": "Probabilidade do item de 4 estrelas ser um item promocional:",
+    "list1": "Prob. base de obter um item 5★:",
+    "list2": "Prob. base de obter um item 4★:",
+    "list3": "Prob. base de obter um item 3★:",
+    "guarantee": "(incl. garantia:"
+  },
+  "stats": {
+    "rateFive": "Probabilidade 5 estrelas",
+    "rateFour": "Probabilidade 4 estrelas",
+    "maxPity": "Limite rígido de 5 estrelas",
+    "softPity": "Limite suave de 5 estrelasy",
+    "pityFive": "Limite atual de 5 estrelas",
+    "pityFour": "Limite atual de 4 estrelas",
+    "guaranteeFive": "5 estrelas em destaque garantido",
+    "guaranteeFour": "4 estrelas em destaque garantido",
+    "total": "Total"
+  }
+}

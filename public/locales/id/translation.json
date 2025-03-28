@@ -1,0 +1,111 @@
+{
+  "main": {
+    "title": "Warp"
+  },
+  "modal": {
+    "lang": { "title": "Pilih bahasamu" },
+    "reset": {
+      "title": "Setel ulang data",
+      "body": "Ini akan secara permanen menghapus semua data Anda. Apa kamu yakin?"
+    },
+    "credits": {
+      "title": "Credits",
+      "body1": "Sebagian besar aset milik Mihoyo dan diambil dari Honkai Star Rail dan diedit.",
+      "body2": "Beberapa ikon disediakan oleh",
+      "body3": "Beberapa seni karakter disediakan oleh"
+    },
+    "vers": {
+      "title": "Pilih versi Anda",
+      "vers": "Versi",
+      "event1": "Event Warp Karakter",
+      "event2": "Event Warp Light Cone"
+    },
+    "rate": {
+      "title": {
+        "char": "Karakter UP",
+        "weap": "Light Cone UP",
+        "rerun-char": "Karakter UP",
+        "rerun-weap": "Light Cone UP",
+        "reruns-char": "Karakter UP",
+        "reruns-weap": "Light Cone UP"
+      },
+      "rate5": "Peluang UP: 5★",
+      "rate4": "Peluang UP: 4★"
+    },
+    "phono": {
+      "title": "Fonograf"
+    },
+    "default": {
+      "title": "Setel ke default",
+      "body": "Ini akan mengatur pengaturan Warp ke nilai default. Apa kamu yakin?"
+    }
+  },
+  "db": {
+    "title": "Arsip",
+    "type1": "Light Cone",
+    "type2": "Karakter",
+    "indexed": "Sudah Didapatkan",
+    "not-indexed": "Delum Didapatkan"
+  },
+  "button": {
+    "close": "Menutup",
+    "cancel": "Membatalkan",
+    "confirm": "Mengonfirmasi",
+    "reset": "Mengatur ulang",
+    "exchange": "Penukaran",
+    "view-details": "Lihat Detail",
+    "phono": "Pilih Musik",
+    "current": "Lagu Saat Ini",
+    "records": "Riwayat",
+    "default": "Bawaan",
+    "stats": "Stats",
+    "sound": "Suara"
+  },
+  "banner": {
+    "beg": {
+      "title": "Warp Keberangkatan",
+      "remaining": "Jumlah Tersisa",
+      "text": "Ada diskon 20% untuk set 10 Warp, dijamin akan memperoleh karakter <1>5★</1> dalam <1>50</1> Warp"
+    },
+    "char": {
+      "text1": "Setiap <1>10</1> Warp dijamin akan memperoleh item <1>4</1>★ ke atas",
+      "text2": "Persentase Karakter yang ditentukan UP"
+    },
+    "weap": {
+      "text1": "Setiap <1>10</1> Warp dijamin akan memperoleh item <1>4</1>★ ke atas",
+      "text2": "Persentase Light Cone yang ditentukan UP"
+    },
+    "reruns": {
+      "text1": "Tekan tab untuk mengganti ke halaman Warp yang berbeda",
+      "text2": "Setiap <1>10</1> Warp dijamin akan memperoleh item <1>4</1>★ ke atas"
+    }
+  },
+  "table": {
+    "entity-type": "Tipe Item",
+    "entity-name": "Nama Item",
+    "warp-type": "Tipe Warp",
+    "warp-time": "Waktu Warp",
+    "char": "Karakter",
+    "weap": "Light Cone",
+    "none": "Tidak ada data",
+    "tag1": "Item UP",
+    "tag2": "Daftar Item",
+    "drop1": "Kemungkinan dari persentase Warp item 5★:",
+    "drop2": "Kemungkinan dari persentase Warp item 4★:",
+    "list1": "Persentase dasar Warp item 5★:",
+    "list2": "Persentase dasar Warp item 4★:",
+    "list3": "Persentase dasar Warp item 3★:",
+    "guarantee": "(Termasuk Jaminan: :"
+  },
+  "stats": {
+    "rateFive": "Probabilitas 5★",
+    "rateFour": "Probabilitas 4★",
+    "maxPity": "Batas Keras 5★",
+    "softPity": "Batas Lunak 5★",
+    "pityFive": "Batas 5★ Saat Ini",
+    "pityFour": "Batas 4★ Saat Ini",
+    "guaranteeFive": "Dijamin Unggulan 5★",
+    "guaranteeFour": "Dijamin Unggulan 4★",
+    "total": "Total"
+  }
+}

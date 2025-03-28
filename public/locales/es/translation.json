@@ -1,0 +1,111 @@
+{
+  "main": {
+    "title": "Salto"
+  },
+  "modal": {
+    "lang": { "title": "Elige tu idioma" },
+    "reset": {
+      "title": "Reiniciar datos",
+      "body": "Esto restablecerá permanentemente todos sus datos. ¿Está seguro?"
+    },
+    "credits": {
+      "title": "Credits",
+      "body1": "La mayoría de los activos pertenecen a Mihoyo y se tomaron de Honkai Star Rail y se editaron.",
+      "body2": "Algunos iconos proporcionados por:",
+      "body3": "Algunos dibujos de personajes proporcionados por:"
+    },
+    "vers": {
+      "title": "Elija su versión de banner",
+      "vers": "Versión",
+      "event1": "Salto de evento de personaje",
+      "event2": "Salto de evento de cono de luz"
+    },
+    "rate": {
+      "title": {
+        "char": "Personajes con probabilidad aumentada",
+        "weap": "Conos de luz con probabilidad aumentada",
+        "rerun-char": "Personajes con probabilidad aumentada",
+        "rerun-weap": "Conos de luz con probabilidad aumentada",
+        "reruns-char": "Personajes con probabilidad aumentada",
+        "reruns-weap": "Conos de luz con probabilidad aumentada"
+      },
+      "rate5": "Probabilidad aumentada: 5★",
+      "rate4": "Probabilidad aumentada: 4★"
+    },
+    "phono": {
+      "title": "Fonógrafo"
+    },
+    "default": {
+      "title": "Establecer como predeterminado",
+      "body": "Esto establecerá la configuración de salto a los valores predeterminados. Está seguro?"
+    }
+  },
+  "db": {
+    "title": "Archivos",
+    "type1": "Conos de luz",
+    "type2": "Personajes",
+    "indexed": "Obtenidos",
+    "not-indexed": "Sin obtener"
+  },
+  "button": {
+    "close": "Cerca",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "reset": "Reiniciar",
+    "exchange": "Recompensas canjeables",
+    "view-details": "Ver detalles",
+    "phono": "Seleccionar musica",
+    "current": "Canción actual",
+    "records": "Historial",
+    "default": "Por defecto",
+    "stats": "Estadísticas",
+    "sound": "Sonido"
+  },
+  "banner": {
+    "beg": {
+      "title": "Salto de partida",
+      "remaining": "Intentos restantes",
+      "text": "20% de descuento en series de 10 Saltos. En <1>50</1> Saltos tienes garantizado un personaje de <1>5</1> estrellas."
+    },
+    "char": {
+      "text1": "Con cada <1>10</1> Saltos tienes garantizado un artículo de <1>4</1> estrellas o más",
+      "text2": "¡Los personajes destacados tienen más probabilidades de salir!"
+    },
+    "weap": {
+      "text1": "Con cada  <1>10</1> Saltos tienes garantizado un artículo de <1>4</1> estrellas o más",
+      "text2": "¡Los conos de luz destacados tienen más probabilidades de salir!"
+    },
+    "reruns": {
+      "text1": "Haz clic en las pestañas para cambiar entre los distintos Saltos.",
+      "text2": "Con cada <1>10</1> Saltos tienes garantizado un artículo de <1>4</1> estrellas o más"
+    }
+  },
+  "table": {
+    "entity-type": "Tipo",
+    "entity-name": "Nombre",
+    "warp-type": "Tipo de Salto",
+    "warp-time": "Fecha",
+    "char": "Personajes",
+    "weap": "Conos de luz",
+    "none": "Sin datos",
+    "tag1": "Artículos con probabilidad de obtención aumentada",
+    "tag2": "Lista de artículos",
+    "drop1": "Prob. base de obtener uno de los artículos de 5 estrellas:",
+    "drop2": "Prob. base de obtener uno de los artículos de 4 estrellas:",
+    "list1": "Prob. base de obtener un artículo de 5★:",
+    "list2": "Prob. base de obtener un artículo de 4★:",
+    "list3": "Prob. base de obtener un artículo de 3★:)",
+    "guarantee": "(Incl. garantía:"
+  },
+  "stats": {
+    "rateFive": "Probabilidad 5 estrellas",
+    "rateFour": "Probabilidad 4 estrellas",
+    "maxPity": "Límite duro de 5 estrellas",
+    "softPity": "Límite suave de 5 estrellas",
+    "pityFive": "Límite actual de 5 estrellas",
+    "pityFour": "Límite actual de 4 estrellas",
+    "guaranteeFive": "Garantizado Destacado 5 Estrellas",
+    "guaranteeFour": "Garantizado Destacado 4 Estrellas",
+    "total": "Total"
+  }
+}

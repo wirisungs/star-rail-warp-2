@@ -1,0 +1,454 @@
+@keyframes banner-ring-spin {
+  to {
+    transform: translate(-24%, -50%) rotate(-360deg);
+  }
+}
+
+.rate-icon {
+  width: 80px;
+  height: 100px;
+  border-radius: 0 15px 0 0;
+  position: relative;
+  overflow: hidden;
+  transition: outline 0.2s, filter 0.2s;
+  margin: 10px;
+  background: linear-gradient(196deg, #4c4c70 0%, #815eba 70%);
+  border-bottom: 2px solid #a079d6;
+}
+
+.rate-icon[rarity="5"] {
+  background: linear-gradient(
+    196deg,
+    rgba(147, 92, 89, 1) 0%,
+    rgba(190, 149, 108, 1) 70%
+  );
+  border-bottom: 2px solid #d6b178;
+}
+
+.rate-icon:hover {
+  outline: 4px solid white;
+}
+
+.rate-icon:active {
+  filter: brightness(0.8);
+}
+
+.rate-name {
+  position: absolute;
+  bottom: 0;
+  background-color: black;
+  color: white;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.rate-char-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  width: 440%;
+}
+
+.name-tag {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  justify-content: space-around;
+}
+
+.name-tag[anim="true"] {
+  animation: animate-tag 0.8s forwards;
+  animation-delay: 500ms;
+  opacity: 0;
+}
+
+.name-tag-top {
+  background-color: rgba(0, 0, 0, 0.6);
+  font-weight: 0;
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.name-tag-bottom {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.name-tag-bottom[bottom="false"] {
+  background-color: transparent;
+}
+
+/* Departure Warp */
+
+.beg-description > div {
+  padding: 12px;
+}
+
+.beg-name-tag {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  animation: animate-tag 0.8s forwards;
+  animation-delay: 300ms;
+  opacity: 0;
+}
+
+@keyframes animate-tag {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes beginner-bronya-animation {
+  0% {
+    transform: translate(-73%, -46%);
+  }
+  100% {
+    transform: translate(-73%, -56%);
+  }
+}
+@keyframes beginner-himeko-animation {
+  0% {
+    transform: translate(-11%, -33%);
+  }
+  100% {
+    transform: translate(-11%, -43%);
+  }
+}
+@keyframes welt-animation {
+  0% {
+    transform: translate(-41%, -26%);
+  }
+  100% {
+    transform: translate(-41%, -36%);
+  }
+}
+@keyframes yanqing-animation {
+  0% {
+    opacity: 0.2;
+    transform: translate(-115%, -45%);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-115%, -65%);
+  }
+}
+@keyframes beginner-gepard-animation {
+  0% {
+    opacity: 0.2;
+    transform: translate(-75%, -40%);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-75%, -60%);
+  }
+}
+@keyframes clara-animation {
+  0% {
+    opacity: 0.2;
+    transform: translate(104%, -46%);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(104%, -66%);
+  }
+}
+@keyframes bailu-animation {
+  0% {
+    opacity: 0.2;
+    transform: translate(95%, 0);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(95%, -50%);
+  }
+}
+
+.rate-up-char-icons {
+  border-radius: 100px;
+  position: absolute;
+  z-index: 101;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.5);
+  bottom: 50%;
+  left: 50%;
+}
+
+.mini-rate-up-char-icons {
+  border-radius: 100px;
+  z-index: 101;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.weap-rate-up {
+  position: absolute;
+  z-index: 101;
+  top: 50%;
+  left: 50%;
+}
+
+@keyframes appear {
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Stellar Warp */
+
+@keyframes bronya-animation {
+  0% {
+    transform: translate(-40%, -58%);
+  }
+  100% {
+    transform: translate(-32%, -58%);
+  }
+}
+
+@keyframes bronya-back-animation {
+  0% {
+    transform: translate(-59.18%, -58%);
+  }
+  100% {
+    transform: translate(-51.18%, -58%);
+  }
+}
+
+@keyframes gepard-animation {
+  0% {
+    transform: translate(-70%, -63%);
+  }
+  100% {
+    transform: translate(-66%, -63%);
+  }
+}
+
+@keyframes himeko-animation {
+  0% {
+    transform: translate(10%, -83%);
+  }
+  100% {
+    transform: translate(14%, -83%);
+  }
+}
+
+@keyframes himeko-back-animation {
+  0% {
+    transform: translate(-24.4%, -83%);
+  }
+  100% {
+    transform: translate(-20.4%, -83%);
+  }
+}
+
+@keyframes cone-1-animation {
+  0% {
+    transform: translate(-330%, -10%) scale(1.3) rotate(5deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-330%, -10%) scale(1) rotate(5deg);
+    opacity: 1;
+  }
+}
+
+@keyframes cone-2-animation {
+  0% {
+    transform: translate(-345%, 40%) scale(1.3) rotate(20deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translate(-345%, 40%) rotate(20deg);
+    opacity: 1;
+  }
+}
+
+@keyframes cone-3-animation {
+  0% {
+    transform: translate(-450%, 25%) scale(1.3) rotate(-10deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translate(-450%, 25%) rotate(-10deg);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .beg-description > div {
+    padding: 5px;
+  }
+}
+/* Char Banner */
+
+.char-shine-container {
+  border-radius: 100px;
+  position: absolute;
+  z-index: 1001;
+  overflow: hidden;
+  bottom: 50%;
+  left: 50%;
+}
+
+.char-shine {
+  position: absolute;
+  bottom: -10%;
+  width: 100%;
+  height: 35%;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+@keyframes char-rate-up-shine {
+  0% {
+    transform: skewY(30deg) translateY(100%);
+  }
+  100% {
+    transform: skewY(30deg) translateY(-330%);
+    opacity: 0.8;
+  }
+}
+
+@keyframes char-rate-up-animation {
+  0% {
+    transform: translate(-54.5%, -31%);
+  }
+  100% {
+    transform: translate(-48.5%, -31%);
+    opacity: 1;
+  }
+}
+
+@keyframes char-animation {
+  0% {
+    transform: translate(-41%, -50%);
+  }
+  100% {
+    transform: translate(-33%, -50%);
+  }
+}
+
+@keyframes seele-back-animation {
+  0% {
+    transform: translateX(-11%);
+  }
+  100% {
+    transform: translateX(-3.8%);
+  }
+}
+
+@keyframes huohuo-back-animation {
+  0% {
+    transform: translate(-23.6%, -19.8%);
+  }
+  100% {
+    transform: translate(-15.6%, -19.8%);
+  }
+}
+
+@keyframes argenti-back-animation {
+  0% {
+    transform: translate(-23.6%, -23.3%);
+  }
+  100% {
+    transform: translate(-15.5%, -23.3%);
+  }
+}
+
+/* Weap Banner */
+
+@keyframes weap-back-animation {
+  0% {
+    transform: translate(-3%, -13%) scale(1.1);
+  }
+  100% {
+    transform: translate(0%, -12%) scale(1);
+  }
+}
+
+/* Reruns */
+
+.rerun-mini-banners {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 101;
+}
+
+@keyframes reruns-weap-back-animation {
+  0% {
+    transform: translate(-31%, -38%) scale(1.05);
+  }
+  100% {
+    transform: translate(-30%, -37%) scale(1);
+  }
+}
+
+.mini-weap-rate-up {
+  position: relative;
+  top: 50%;
+  left: 50%;
+}
+
+@keyframes mini-cone-1-animation {
+  0% {
+    transform: scale(1.3) rotate(5deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(5deg);
+    opacity: 1;
+  }
+}
+
+@keyframes mini-cone-2-animation {
+  0% {
+    transform: translate(-20%, 25%) scale(1.3) rotate(20deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translate(-20%, 25%) rotate(20deg);
+    opacity: 1;
+  }
+}
+
+@keyframes mini-cone-3-animation {
+  0% {
+    transform: translate(-260%, 35%) scale(1.3) rotate(-10deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translate(-260%, 35%) rotate(-10deg);
+    opacity: 1;
+  }
+}
+
+@keyframes mini-banner-ring-spin {
+  to {
+    transform: translate(-15%, -60%) rotate(-360deg);
+  }
+}
