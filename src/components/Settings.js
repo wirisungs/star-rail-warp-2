@@ -7,7 +7,6 @@ import ResetModal from "./modals/ResetModal";
 import VersionModal from "./modals/VersionModal";
 import ResizeContext from "./context/ResizeContext";
 import DataBankOverlay from "./db/DataBankOverlay";
-import CreditsModal from "./modals/CreditsModal";
 import PhonoModal from "./modals/PhonoModal";
 import LangModal from "./modals/LangModal";
 import { useTranslation } from "react-i18next";
@@ -43,8 +42,6 @@ const Settings = ({
   const [showReset, setShowReset] = useState(false);
 
   const [showVersion, setShowVersion] = useState(false);
-
-  const [showCredits, setShowCredits] = useState(false);
 
   const [showLang, setShowLang] = useState(false);
 
@@ -110,7 +107,6 @@ const Settings = ({
         setShow={setShowDB}
         handleSelect={handleDBSelect}
       />
-      <CreditsModal show={showCredits} setShow={setShowCredits} />
       <LangModal show={showLang} setShow={setShowLang} />
       <PhonoModal
         show={showPhono}
@@ -243,18 +239,6 @@ const Settings = ({
               onClick={() => {
                 if (sound) soundService.playSound('button-select');
                 setShowLang(true);
-              }}
-            />
-            <LazyLoadImage
-              effect="opacity"
-              alt="Credits Button"
-              className="menu-button"
-              src={`assets/menu/${i18n.resolvedLanguage}/credits.webp`}
-              draggable="false"
-              width={getWidth(114, 50)}
-              onClick={() => {
-                if (sound) soundService.playSound('button-select');
-                setShowCredits(true);
               }}
             />
           </div>
