@@ -120,7 +120,13 @@ export default function DetailsMain({ setContent, bannerType, history }) {
             <RecordsContent
               title={json.getTitle(vers, bannerType, i18n.resolvedLanguage)}
               type={bannerType}
-              history={history.toReversed()}
+              history={history.filter(item =>
+                item.bannerType === (bannerType.includes("rerun")
+                  ? bannerType.includes("char")
+                    ? "char"
+                    : "weap"
+                  : bannerType)
+              ).reverse()}
             />
           )}
         </Scrollbars>

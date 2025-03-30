@@ -10,6 +10,7 @@ import FilterButton from "./FilterButton";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import Checkbox from "../Checkbox";
+import { inventoryService } from "../../services/inventoryService";
 
 export default function DataBank({ type, setContent, setShowDB }) {
   const { getWidth, getHeight } = useContext(ResizeContext);
@@ -29,14 +30,36 @@ export default function DataBank({ type, setContent, setShowDB }) {
     if (sound) playSelectItem();
   };
 
-  const stash = Object.entries(
-    JSON.parse(localStorage.getItem("stash"))
-  ).filter(([name]) => {
-    if (type.includes("char")) return allChars.includes(name);
-    else return allWeapons.includes(name);
-  });
+  const [inventory, setInventory] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const total = stash.reduce((acc, [, count]) => acc + (count > 0 ? 1 : 0), 0);
+  useEffect(() => {
+    const fetchInventory = async () => {
+      try {
+        setLoading(true);
+        const data = await inventoryService.getInventoryForDataBank();
+        setInventory(data);
+      } catch (error) {
+        console.error('Error fetching inventory:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInventory();
+  }, []);
+
+  // Tạo danh sách tất cả items với số lượng từ inventory hoặc 0 nếu chưa có
+  const createFullStash = () => {
+    const allItems = type.includes("char") ? allChars : allWeapons;
+    return allItems.map(itemId => [itemId, inventory[itemId] || 0]);
+  };
+
+  const fullStash = createFullStash();
+  const total = fullStash.reduce((acc, [, count]) => acc + (count > 0 ? 1 : 0), 0);
+  const totalItems = type.includes("char") ? allChars.length : allWeapons.length;
 
   const compareRarity = (a, b) => {
     const [keyA] = a;
@@ -48,24 +71,19 @@ export default function DataBank({ type, setContent, setShowDB }) {
     if (rarityA !== rarityB) {
       return rarityB - rarityA;
     }
+
+    // Nếu cùng độ hiếm, ưu tiên item đã có (count > 0)
+    const countA = inventory[keyA] || 0;
+    const countB = inventory[keyB] || 0;
+    if ((countA > 0) !== (countB > 0)) {
+      return countB - countA;
+    }
+
+    // Nếu cùng trạng thái sở hữu, sắp xếp theo tên
+    return keyA.localeCompare(keyB);
   };
 
-  const groupedArray = stash.sort(compareRarity).reduce(
-    (acc, curr) => {
-      if (curr[1] !== 0) {
-        acc.highPriority.push(curr);
-      } else {
-        acc.lowPriority.push(curr);
-      }
-      return acc;
-    },
-    { highPriority: [], lowPriority: [] }
-  );
-
-  const sortedStash = [
-    ...groupedArray.highPriority,
-    ...groupedArray.lowPriority,
-  ];
+  const sortedStash = fullStash.sort(compareRarity);
 
   const renderThumb = ({ style, ...props }) => {
     const thumbStyle = {
@@ -113,6 +131,36 @@ export default function DataBank({ type, setContent, setShowDB }) {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [setContent, setShowDB, playExit, sound]);
+
+  if (loading) {
+    return (
+      <motion.section
+        key="db"
+        initial={{ filter: "brightness(0)" }}
+        animate={{ filter: "brightness(1)" }}
+        exit={{ filter: "brightness(0)" }}
+        className="db-back"
+        style={{ backgroundImage: "url(assets/db/db-back.webp)" }}
+      >
+        <div className="loading-text">Loading inventory...</div>
+      </motion.section>
+    );
+  }
+
+  if (error) {
+    return (
+      <motion.section
+        key="db"
+        initial={{ filter: "brightness(0)" }}
+        animate={{ filter: "brightness(1)" }}
+        exit={{ filter: "brightness(0)" }}
+        className="db-back"
+        style={{ backgroundImage: "url(assets/db/db-back.webp)" }}
+      >
+        <div className="error-text">Error: {error}</div>
+      </motion.section>
+    );
+  }
 
   return (
     <motion.section
@@ -179,8 +227,7 @@ export default function DataBank({ type, setContent, setShowDB }) {
         >
           {t("db.indexed")}{" "}
           <span style={{ color: "#face75" }}>
-            {total}/
-            {type.includes("char") ? allChars.length : allWeapons.length}
+            {total}/{totalItems}
           </span>
         </div>
         <CloseButton onClose={handleExit} />
@@ -246,30 +293,24 @@ export default function DataBank({ type, setContent, setShowDB }) {
           autoHideDuration={200}
           renderThumbVertical={renderThumb}
         >
-          {sortedStash.length > 0 ? (
-            sortedStash
-              .filter(([name]) => {
-                if (filter === "All") return true;
-                return json.getPath(name) === filter;
-              })
-              .map(([name, count]) => {
-                return (
-                  <ItemCard
-                    key={name}
-                    type={type}
-                    item={name}
-                    showCount={checked && count > 0}
-                    count={count}
-                    indexed={count > 0}
-                    handleSelect={handleItemSelect}
-                  />
-                );
-              })
-          ) : (
-            <p style={{ color: "white" }}>
-              Nothing appearing? Reset in the phone menu.
-            </p>
-          )}
+          {sortedStash
+            .filter(([name]) => {
+              if (filter === "All") return true;
+              return json.getPath(name) === filter;
+            })
+            .map(([name, count]) => {
+              return (
+                <ItemCard
+                  key={name}
+                  type={type}
+                  item={name}
+                  showCount={checked && count > 0}
+                  count={count}
+                  indexed={count > 0}
+                  handleSelect={handleItemSelect}
+                />
+              );
+            })}
         </Scrollbars>
       </div>
     </motion.section>

@@ -2,6 +2,17 @@
   "main": {
     "title": "Bước Nhảy"
   },
+  "auth": {
+    "login": "Đăng Nhập",
+    "register": "Đăng Ký",
+    "username": "Tên Đăng Nhập",
+    "password": "Mật Khẩu",
+    "email": "Email",
+    "noAccount": "Chưa có tài khoản?",
+    "haveAccount": "Đã có tài khoản?",
+    "loginError": "Tên đăng nhập hoặc mật khẩu không đúng",
+    "registerError": "Tên đăng nhập hoặc email đã tồn tại"
+  },
   "modal": {
     "lang": { "title": "Chọn ngôn ngữ của bạn" },
     "reset": {
@@ -49,17 +60,17 @@
   },
   "button": {
     "close": "Đóng",
-    "cancel": "Hủy bỏ",
+    "cancel": "Hủy",
     "confirm": "Xác nhận",
-    "reset": "Cài lại",
-    "exchange": "Đổi Cửa Hàng",
-    "view-details": "Xem Chi Tiết",
+    "reset": "Đặt lại",
+    "exchange": "Trao đổi",
+    "view-details": "Xem chi tiết",
     "phono": "Chọn nhạc",
-    "current": "Bài Hiện Tại",
-    "records": "Lịch Sử",
+    "current": "Bài hát hiện tại",
+    "records": "Lịch sử",
     "default": "Mặc định",
-    "stats": "Số liệu thống kê",
-    "sound": "âm thanh"
+    "stats": "Thống kê",
+    "sound": "Âm thanh"
   },
   "banner": {
     "beg": {

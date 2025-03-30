@@ -13,8 +13,14 @@ import himeko from "../assets/images/banner/beginner/himeko.webp";
 import bailu from "../assets/images/banner/beginner/bailu.webp";
 import welt from "../assets/images/banner/beginner/welt.webp";
 
-const DepartureWarp = ({ total }) => {
-  const { getWidth } = useContext(ResizeContext);
+export default function DepartureWarp({ total }) {
+  const { getWidth, getHeight } = useContext(ResizeContext);
+  const { t, i18n } = useTranslation();
+
+  // Nếu đã roll 50 lần, không hiển thị banner
+  if (total >= 50) {
+    return null;
+  }
 
   const renderThumb = ({ style, ...props }) => {
     const thumbStyle = {
@@ -25,9 +31,14 @@ const DepartureWarp = ({ total }) => {
     );
   };
 
-  const { t, i18n } = useTranslation();
   return (
-    <React.Fragment>
+    <div
+      style={{
+        width: getWidth(1200),
+        height: getHeight(700, 1200),
+        position: "relative",
+      }}
+    >
       <LazyLoadImage
         effect="opacity"
         src={gepard}
@@ -245,8 +256,6 @@ const DepartureWarp = ({ total }) => {
           Warps.
         </Trans>
       </Scrollbars>
-    </React.Fragment>
+    </div>
   );
-};
-
-export default DepartureWarp;
+}

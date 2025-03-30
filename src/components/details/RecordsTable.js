@@ -9,9 +9,25 @@ const RecordsTable = ({ history, type, title }) => {
   const { getWidth } = useContext(ResizeContext);
   const { t, i18n } = useTranslation();
 
+  console.log("Full history data:", history);
+
   const displayHistory = history.map((item, index) => {
+    console.log("Processing item:", item);
+    console.log("Item ID:", item.itemId);
+    console.log("Item name from DB:", item.itemName);
+    console.log("Current language:", i18n.resolvedLanguage);
+    console.log("Translation object:", trans[item.itemId]);
+
+    // Fallback chain for item name
+    const displayName = trans[item.itemId]?.[i18n.resolvedLanguage] ||
+                       json.getName(item.itemId, i18n.resolvedLanguage) ||
+                       item.itemName ||
+                       item.itemId;
+
+    console.log("Final display name:", displayName);
+
     return (
-      <tr key={item + index} style={{ fontSize: getWidth(14) }}>
+      <tr key={item.itemId + index} style={{ fontSize: getWidth(14) }}>
         <td
           className="w-20"
           style={{
@@ -20,7 +36,7 @@ const RecordsTable = ({ history, type, title }) => {
             color: "#767676",
           }}
         >
-          {t(`table.${json.isChar(item.id) ? "char" : "weap"}`)}
+          {t(item.itemType === "character" ? "table.char" : "table.weap")}
         </td>
         <td
           style={{
@@ -28,14 +44,14 @@ const RecordsTable = ({ history, type, title }) => {
             fontSize: getWidth(22, 6),
             verticalAlign: "middle",
             color:
-              json.getRarity(item.id) === 4
+              item.rarity === 4
                 ? "#a256e0"
-                : json.getRarity(item.id) === 5
+                : item.rarity === 5
                 ? "#d2a96b"
                 : "#767676",
           }}
         >
-          {trans[item.id][i18n.resolvedLanguage]}
+          {displayName}
         </td>
         <td
           className="w-23"
@@ -59,7 +75,7 @@ const RecordsTable = ({ history, type, title }) => {
             color: "#767676",
           }}
         >
-          {new Date(item.time).toLocaleString()}
+          {item.timestamp ? new Date(item.timestamp).toLocaleString() : "-"}
         </td>
       </tr>
     );

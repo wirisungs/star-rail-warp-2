@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { allChars, allWeapons } from "../../util/Constants";
 import SoundContext from "../context/SoundContext";
 import ResizeContext from "../context/ResizeContext";
 import { useTranslation } from "react-i18next";
+import { inventoryService } from "../../services/inventoryService";
 
 export default function DataBankOverlay({ show, setShow, handleSelect }) {
   const { getWidth } = useContext(ResizeContext);
@@ -16,9 +17,30 @@ export default function DataBankOverlay({ show, setShow, handleSelect }) {
 
   const handleClose = () => setShow(false);
 
-  const stash = Object.entries(JSON.parse(localStorage.getItem("stash")) || []);
+  const [stash, setStash] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const total = stash.reduce(
+  useEffect(() => {
+    const fetchInventory = async () => {
+      try {
+        setLoading(true);
+        const data = await inventoryService.getInventoryForDataBank();
+        setStash(data);
+      } catch (error) {
+        console.error('Error fetching inventory:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (show) {
+      fetchInventory();
+    }
+  }, [show]);
+
+  const total = Object.entries(stash).reduce(
     ([accLC, accC], [name, count]) => {
       if (allChars.includes(name)) return [accLC, accC + (count > 0 ? 1 : 0)];
       else return [accLC + (count > 0 ? 1 : 0), accC];
@@ -58,7 +80,7 @@ export default function DataBankOverlay({ show, setShow, handleSelect }) {
         />
         <div style={{ color: "white" }}>{t("db.type1")}</div>
         <div style={{ color: "#dac291" }}>
-          {total[0]}/{allWeapons.length}
+          {loading ? "..." : error ? "?" : `${total[0]}/${allWeapons.length}`}
         </div>
       </div>
       <div className="db-type-group">
@@ -77,7 +99,7 @@ export default function DataBankOverlay({ show, setShow, handleSelect }) {
         />
         <div style={{ color: "white" }}>{t("db.type2")}</div>
         <div style={{ color: "#dac291" }}>
-          {total[1]}/{allChars.length}
+          {loading ? "..." : error ? "?" : `${total[1]}/${allChars.length}`}
         </div>
       </div>
     </Modal>

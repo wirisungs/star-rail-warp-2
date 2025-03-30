@@ -23,6 +23,8 @@ import CharBanner from "../banners/CharBanner";
 import WeapBanner from "../banners/WeapBanner";
 import RerunCharBanner from "../banners/RerunCharBanner";
 import RerunWeapBanner from "../banners/RerunWeapBanner";
+import { warpService } from '../services/warpService';
+import { inventoryService } from '../services/inventoryService';
 
 export default function Main({
   bannerType,
@@ -226,30 +228,82 @@ export default function Main({
     standard: <StellarWarp />,
   };
 
-  const handleWarp = (warps) => {
-    if (bannerType === "beginner") {
-      setTotalBeginner(totalBeginner + 1);
-      localStorage.setItem("totalBeginner", totalBeginner + 1);
-      if (totalBeginner === 4) {
-        setBannerType("char");
-        sessionStorage.setItem("bannerType", "char");
-      }
-    }
-
+  const handleWarp = async (warps) => {
     let type = bannerType.includes("rerun")
       ? bannerType.includes("char")
         ? "char"
         : "weap"
       : bannerType;
 
-    const prevTotal = parseInt(localStorage.getItem(type + "Total")) || 0;
-    localStorage.setItem(type + "Total", prevTotal + warps);
+    // Cập nhật thống kê cho banner hiện tại
+    const stats = await warpService.getWarpStats();
+    let currentStats = stats.find(s => s.bannerType === type) || {
+      totalPulls: 0,
+      singlePulls: 0,
+      tenPulls: 0,
+      totalJades: 0
+    };
+
+    // Xử lý đặc biệt cho banner tân thủ
+    if (bannerType === "beginner") {
+      const newTotal = totalBeginner + warps;
+      setTotalBeginner(newTotal);
+      localStorage.setItem("totalBeginner", newTotal);
+
+      // Cập nhật banner state trước khi roll
+      let banner = bannerState.beginner;
+      banner.pityFive = newTotal;
+      banner.guaranteeFive = newTotal >= 50;
+
+      // Cập nhật banner state trong database
+      await warpService.updateBannerState({
+        bannerType: 'beginner',
+        pityFive: banner.pityFive,
+        pityFour: banner.pityFour,
+        guaranteeFive: banner.guaranteeFive,
+        guaranteeFour: banner.guaranteeFour
+      });
+
+      // Cập nhật state local
+      let bannerStateClone = bannerState;
+      bannerStateClone.beginner = banner;
+      setBannerState(bannerStateClone);
+
+      // Cập nhật thống kê
+      await warpService.updateWarpStats({
+        bannerType: 'beginner',
+        totalPulls: newTotal,
+        singlePulls: warps === 1 ? newTotal : 0,
+        tenPulls: warps === 10 ? Math.floor(newTotal / 10) : 0,
+        totalJades: newTotal * 160,
+        pity: newTotal,
+        guaranteed: newTotal >= 50
+      });
+
+      // Nếu đã roll 50 lần, chuyển sang banner character
+      if (newTotal >= 50) {
+        setBannerType("char");
+        sessionStorage.setItem("bannerType", "char");
+        return; // Kết thúc xử lý nếu đã đạt giới hạn
+      }
+    } else {
+      // Cập nhật thống kê cho các banner khác
+      await warpService.updateWarpStats({
+        bannerType: type,
+        totalPulls: currentStats.totalPulls + warps,
+        singlePulls: warps === 1 ? currentStats.singlePulls + 1 : currentStats.singlePulls,
+        tenPulls: warps === 10 ? currentStats.tenPulls + 1 : currentStats.tenPulls,
+        totalJades: currentStats.totalJades + (warps * 160)
+      });
+    }
 
     setHasFive(false);
     setHasFour(false);
     let warpResults = [];
     let banner = bannerState[type];
-    for (let i = 0; i < warps; i++)
+
+    // Roll tất cả items
+    for (let i = 0; i < warps; i++) {
       warpResults.push(
         CalcWarp(
           vers,
@@ -261,33 +315,82 @@ export default function Main({
           rerunWeap
         )
       );
-
-    warpResults.map((item) => {
-      updateStash(item);
-      return item;
-    });
-
-    localStore("PityFive", bannerState[type].pityFive);
-    localStore("PityFour", bannerState[type].pityFour);
-    localStore("GuaranteeFive", bannerState[type].guaranteeFive);
-    localStore("GuaranteeFour", bannerState[type].guaranteeFour);
-
-    if (type === "standard") {
-      localStore("TypeCount", bannerState[type].typeCount);
     }
 
-    let historyClone = structuredClone(history);
-    historyClone[type] = historyClone[type].concat(
-      new History(warpResults).getHistory()
-    );
-    localStore("History", JSON.stringify(historyClone[type]));
-    setHistory(historyClone);
+    // Chuẩn bị dữ liệu cho batch update
+    const historyItems = warpResults.map(item => {
+      const rarity = json.getRarity(item);
+      const itemType = rarity === 3 ? 'weapon' : (type === 'char' ? 'character' : 'weapon');
+      const itemName = json.getName(item, i18n.resolvedLanguage);
+      return {
+        bannerType: type,
+        itemId: item,
+        itemName: itemName,
+        itemType: itemType,
+        rarity: rarity,
+        pity: banner.pityFive,
+        guaranteed: banner.guaranteeFive
+      };
+    });
 
+    const inventoryItems = warpResults.map(item => {
+      const rarity = json.getRarity(item);
+      const itemType = rarity === 3 ? 'weapon' : (type === 'char' ? 'character' : 'weapon');
+      const itemName = json.getName(item, i18n.resolvedLanguage);
+      return {
+        itemId: item,
+        itemName: itemName,
+        itemType: itemType,
+        rarity: rarity
+      };
+    });
+
+    // Thực hiện batch updates
+    try {
+      await Promise.all([
+        // Lưu history
+        Promise.all(historyItems.map(item => warpService.addWarpHistory(item))),
+        // Cập nhật inventory
+        Promise.all(inventoryItems.map(item => inventoryService.addItem(item))),
+        // Cập nhật banner state
+        warpService.updateBannerState({
+          bannerType: type,
+          pityFive: banner.pityFive,
+          pityFour: banner.pityFour,
+          guaranteeFive: banner.guaranteeFive,
+          guaranteeFour: banner.guaranteeFour
+        })
+      ]);
+    } catch (error) {
+      console.error('Error during batch updates:', error);
+    }
+
+    // Cập nhật banner state
     let bannerStateClone = bannerState;
     bannerStateClone[type] = banner;
     setBannerState(bannerStateClone);
+
+    // Cập nhật UI
     setCurrentWarp(warpResults);
     setContent("video");
+
+    // Cập nhật history state
+    const newHistoryItems = warpResults.map(item => {
+      const itemRarity = json.getRarity(item);
+      return {
+        id: item,
+        time: new Date(),
+        bannerType: type,
+        itemId: item,
+        itemName: json.getName(item, i18n.resolvedLanguage),
+        itemType: itemRarity === 3 ? 'weapon' : (type === 'char' ? 'character' : 'weapon'),
+        rarity: itemRarity,
+        timestamp: new Date(),
+        guaranteed: banner.guaranteeFive
+      };
+    });
+
+    setHistory(prevHistory => [...newHistoryItems, ...prevHistory]);
   };
 
   const getBack = useCallback(() => {

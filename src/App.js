@@ -18,35 +18,84 @@ import useBGM from "./components/hooks/useBGM";
 import StartModal from "./components/modals/StartModal";
 import { BGM } from "./util/Constants";
 import BannerFactory from "./components/factory/BannerFactory";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import AuthPage from './components/auth/AuthPage';
+import './css/Auth.css';
+import { warpService } from './services/warpService';
+import ProtectedRoute from './components/ProtectedRoute';
+import Loading from "./components/Loading";
 
-function App() {
-  // main, data-bank, details
-  const [content, setContent] = useState(
-    process.env.NODE_ENV === "production" ? "main" : "main"
-  );
+// Protected Route component
+const ProtectedRouteComponent = ({ children }) => {
+  const { user, loading } = useAuth();
 
-  const [showStart, setShowStart] = useState(
-    process.env.NODE_ENV === "production"
-  );
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
+  if (!user) {
+    return <Navigate to="/auth" />;
+  }
+
+  return children;
+};
+
+function AppContent() {
+  const { user, loading: authLoading } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [content, setContent] = useState("main");
+  const [showStart, setShowStart] = useState(process.env.NODE_ENV === "production");
   const [bannerType, setBannerType] = useState(
-    sessionStorage.getItem("bannerType")
-      ? sessionStorage.getItem("bannerType")
-      : parseInt(localStorage.getItem("totalBeginner")) === 5
-      ? "char"
-      : "beginner"
+    sessionStorage.getItem("bannerType") || "beginner"
   );
-
   const [currentWarp, setCurrentWarp] = useState([]);
+  const [history, setHistory] = useState([]);
+  const [hasFive, setHasFive] = useState(false);
+  const [hasFour, setHasFour] = useState(false);
+  const [showDB, setShowDB] = useState(false);
+  const [DBType, setDBType] = useState("char");
+  const [newItems, setNewItems] = useState([]);
 
-  const [bannerState, setBannerState] = useState(() => {
-    const banners = {
-      beginner: BannerFactory.createBanner('beginner').getConfig(),
-      char: BannerFactory.createBanner('char').getConfig(),
-      weap: BannerFactory.createBanner('weap').getConfig(),
-      standard: BannerFactory.createBanner('standard').getConfig()
-    };
-    return banners;
+  const [bannerState, setBannerState] = useState({
+    beginner: {
+      pityFive: 0,
+      pityFour: 0,
+      guaranteeFive: false,
+      guaranteeFour: false,
+      maxPity: 50,
+      softPity: 40,
+      rateFive: 0.006,
+    },
+    char: {
+      pityFive: 0,
+      pityFour: 0,
+      guaranteeFive: false,
+      guaranteeFour: false,
+      maxPity: 90,
+      softPity: 75,
+      rateFive: 0.006,
+    },
+    weap: {
+      pityFive: 0,
+      pityFour: 0,
+      guaranteeFive: false,
+      guaranteeFour: false,
+      maxPity: 80,
+      softPity: 65,
+      rateFive: 0.008,
+    },
+    standard: {
+      pityFive: 0,
+      pityFour: 0,
+      guaranteeFive: false,
+      guaranteeFour: false,
+      maxPity: 90,
+      softPity: 75,
+      rateFive: 0.006,
+      typeCount: 0,
+    },
   });
 
   const [sound, setSound] = useState(false);
@@ -91,8 +140,6 @@ function App() {
 
   const isVisible = usePageVisibility();
 
-  const [newItems, setNewItems] = useState([]);
-
   const size = useWindowSize();
 
   const getWidth = useCallback(
@@ -120,9 +167,6 @@ function App() {
     if (!isVisible) setSound(false);
     else setSound(continueSound);
   }, [isVisible, sound, continueSound]);
-
-  const [hasFive, setHasFive] = useState(false);
-  const [hasFour, setHasFour] = useState(false);
 
   const handleTrack = (newTrack, loaded = false) => {
     if (newTrack === track) return;
@@ -186,16 +230,66 @@ function App() {
     setBGMVolume,
   ]);
 
-  const [showDB, setShowDB] = useState(false);
+  // Load banner state from database
+  useEffect(() => {
+    const loadBannerStates = async () => {
+      try {
+        setLoading(true);
+        const bannerTypes = ['beginner', 'char', 'weap', 'standard'];
+        const states = {};
 
-  const [DBType, setDBType] = useState("char");
+        for (const type of bannerTypes) {
+          try {
+            const state = await warpService.getBannerState(type);
+            if (state) {
+              states[type] = {
+                ...bannerState[type], // Keep default values
+                ...state, // Override with values from database
+              };
+            }
+          } catch (error) {
+            console.warn(`Failed to load state for banner ${type}:`, error);
+            states[type] = bannerState[type]; // Use default values
+          }
+        }
 
-  const [history, setHistory] = useState({
-    beginner: JSON.parse(localStorage.getItem("begHistory")) || [],
-    char: JSON.parse(localStorage.getItem("charHistory")) || [],
-    weap: JSON.parse(localStorage.getItem("weapHistory")) || [],
-    standard: JSON.parse(localStorage.getItem("standHistory")) || [],
-  });
+        setBannerState(states);
+      } catch (error) {
+        console.error('Error loading banner states:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user) {
+      loadBannerStates();
+    }
+  }, [user]);
+
+  // Load warp history
+  useEffect(() => {
+    const loadHistory = async () => {
+      if (!user) return;
+
+      try {
+        const data = await warpService.getWarpHistory();
+        setHistory(data.history || []);
+      } catch (error) {
+        console.error('Error loading warp history:', error);
+      }
+    };
+
+    loadHistory();
+  }, [user]);
+
+  if (authLoading || loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <ResizeProvider value={resizeValue}>
@@ -218,9 +312,9 @@ function App() {
                 setContent={setContent}
                 setCurrentWarp={setCurrentWarp}
                 setDBType={setDBType}
+                showStart={showStart}
                 history={history}
                 setHistory={setHistory}
-                showStart={showStart}
                 bgm={[track, handleTrack]}
               />
             )}
@@ -267,15 +361,7 @@ function App() {
               <DetailsMain
                 setContent={setContent}
                 bannerType={bannerType}
-                history={
-                  history[
-                    bannerType.includes("rerun")
-                      ? bannerType.includes("char")
-                        ? "char"
-                        : "weap"
-                      : bannerType
-                  ]
-                }
+                history={history}
               />
             )}
             {content === "stats" && (
@@ -294,14 +380,27 @@ function App() {
   );
 }
 
-export default function WrappedApp() {
+function App() {
   return (
-    <Suspense fallback={<Loading />}>
-      <App />
-    </Suspense>
+    <Router>
+      <AuthProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/auth" element={<AuthPage />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <AppContent />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </AuthProvider>
+    </Router>
   );
 }
 
-function Loading() {
-  return <div id="loading">Loading...</div>;
-}
+export default App;

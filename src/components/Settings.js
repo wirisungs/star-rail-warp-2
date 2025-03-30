@@ -53,6 +53,25 @@ const Settings = ({
     if (sound) soundService.playSound('db-load');
   };
 
+  const handleLogout = () => {
+    fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          window.location.href = '/login';
+        } else {
+          console.error('Logout failed:', data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Logout error:', error);
+      });
+  };
+
+
   const { i18n } = useTranslation();
 
   const trackInfo = () => {
@@ -241,6 +260,18 @@ const Settings = ({
                 setShowLang(true);
               }}
             />
+            {/* <LazyLoadImage
+              effect="opacity"
+              alt="Logout Button"
+              className="menu-button"
+              src={`assets/menu/${i18n.resolvedLanguage}/logout.webp`}
+              draggable="false"
+              width={getWidth(114, 50)}
+              onClick={() => {
+                if (sound) soundService.playSound('button-select');
+                handleLogout();
+              }}
+            /> */}
           </div>
         </Offcanvas.Body>
       </Offcanvas>

@@ -10,6 +10,8 @@ const DetailsTable = ({ items, rateUp = [], type }) => {
   const { i18n } = useTranslation();
 
   const tableItem = rateUp.concat(items).map((item, index) => {
+    if (!items[Math.floor(index / 4) * 4]) return null;
+
     return (
       <tr key={item + index} style={{ fontSize: getWidth(14, 10) }}>
         {index < Math.ceil(items.length / 4) ? (
@@ -22,7 +24,7 @@ const DetailsTable = ({ items, rateUp = [], type }) => {
                 color: "#767676",
               }}
             >
-              {rateUp.includes(items[index * 4]) ? (
+              {rateUp.includes(items[index * 4]) && items[index * 4] ? (
                 <>
                   <LazyLoadImage
                     alt="Rate Up Icon"
@@ -30,11 +32,11 @@ const DetailsTable = ({ items, rateUp = [], type }) => {
                     src="../assets/details/rate-up.webp"
                     width={12}
                   />
-                  {trans[items[index * 4]][i18n.resolvedLanguage]}
+                  {trans[items[index * 4]]?.[i18n.resolvedLanguage] || items[index * 4]}
                 </>
-              ) : (
-                trans[items[index * 4]][i18n.resolvedLanguage]
-              )}
+              ) : items[index * 4] ? (
+                trans[items[index * 4]]?.[i18n.resolvedLanguage] || items[index * 4]
+              ) : null}
             </td>
             <td
               className="w-25"
@@ -44,7 +46,7 @@ const DetailsTable = ({ items, rateUp = [], type }) => {
                 color: "#767676",
               }}
             >
-              {rateUp.includes(items[index * 4 + 1]) ? (
+              {rateUp.includes(items[index * 4 + 1]) && items[index * 4 + 1] ? (
                 <>
                   <LazyLoadImage
                     alt="Rate Up Icon"
@@ -52,13 +54,11 @@ const DetailsTable = ({ items, rateUp = [], type }) => {
                     src="../assets/details/rate-up.webp"
                     width={12}
                   />
-                  {trans[items[index * 4 + 1]][i18n.resolvedLanguage]}
+                  {trans[items[index * 4 + 1]]?.[i18n.resolvedLanguage] || items[index * 4 + 1]}
                 </>
-              ) : items[index * 4 + 1] == null ? (
-                ""
-              ) : (
-                trans[items[index * 4 + 1]][i18n.resolvedLanguage]
-              )}
+              ) : items[index * 4 + 1] ? (
+                trans[items[index * 4 + 1]]?.[i18n.resolvedLanguage] || items[index * 4 + 1]
+              ) : null}
             </td>
             <td
               className="w-25"
@@ -68,7 +68,7 @@ const DetailsTable = ({ items, rateUp = [], type }) => {
                 color: "#767676",
               }}
             >
-              {rateUp.includes(items[index * 4 + 2]) ? (
+              {rateUp.includes(items[index * 4 + 2]) && items[index * 4 + 2] ? (
                 <>
                   <LazyLoadImage
                     alt="Rate Up Icon"
@@ -76,13 +76,11 @@ const DetailsTable = ({ items, rateUp = [], type }) => {
                     src="../assets/details/rate-up.webp"
                     width={12}
                   />
-                  {trans[items[index * 4 + 2]][i18n.resolvedLanguage]}
+                  {trans[items[index * 4 + 2]]?.[i18n.resolvedLanguage] || items[index * 4 + 2]}
                 </>
-              ) : items[index * 4 + 2] == null ? (
-                ""
-              ) : (
-                trans[items[index * 4 + 2]][i18n.resolvedLanguage]
-              )}
+              ) : items[index * 4 + 2] ? (
+                trans[items[index * 4 + 2]]?.[i18n.resolvedLanguage] || items[index * 4 + 2]
+              ) : null}
             </td>
             <td
               className="w-25"
@@ -92,7 +90,7 @@ const DetailsTable = ({ items, rateUp = [], type }) => {
                 color: "#767676",
               }}
             >
-              {rateUp.includes(items[index * 4 + 3]) ? (
+              {rateUp.includes(items[index * 4 + 3]) && items[index * 4 + 3] ? (
                 <>
                   <LazyLoadImage
                     alt="Rate Up Icon"
@@ -100,18 +98,14 @@ const DetailsTable = ({ items, rateUp = [], type }) => {
                     src="../assets/details/rate-up.webp"
                     width={12}
                   />
-                  {trans[items[index * 4 + 3]][i18n.resolvedLanguage]}
+                  {trans[items[index * 4 + 3]]?.[i18n.resolvedLanguage] || items[index * 4 + 3]}
                 </>
-              ) : items[index * 4 + 3] == null ? (
-                ""
-              ) : (
-                trans[items[index * 4 + 3]][i18n.resolvedLanguage]
-              )}
+              ) : items[index * 4 + 3] ? (
+                trans[items[index * 4 + 3]]?.[i18n.resolvedLanguage] || items[index * 4 + 3]
+              ) : null}
             </td>
           </>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </tr>
     );
   });

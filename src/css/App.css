@@ -1309,3 +1309,43 @@ body * {
     overflow: auto;
   }
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+  color: #9d8463;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+  color: #ff4d4f;
+  text-align: center;
+  padding: 0 20px;
+  background-color: #282827;
+}
+
+.error-message {
+  margin-bottom: 20px;
+}
+
+.error-retry {
+  padding: 10px 20px;
+  background-color: #9d8463;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.error-retry:hover {
+  background-color: #b69b7b;
+}

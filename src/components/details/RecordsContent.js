@@ -16,30 +16,30 @@ export default function RecordsContent({ type, history, title }) {
   const [playPrev] = useSound("/assets/audio/sfx/prev.mp3");
   const [playNone] = useSound("/assets/audio/sfx/none.mp3", { volume: 0.8 });
 
-  const showNext = () => {
-    const remainingElements = history.length - currentPosition;
-    const elementsToShow = Math.min(remainingElements, 5);
+  const ITEMS_PER_PAGE = 5;
+  const totalPages = Math.ceil(history.length / ITEMS_PER_PAGE);
 
-    if (elementsToShow > 0) {
+  const showNext = () => {
+    if (pagIndex < totalPages) {
       setPagIndex(pagIndex + 1);
-      setCurrentPosition(currentPosition + elementsToShow);
+      setCurrentPosition(currentPosition + ITEMS_PER_PAGE);
       if (sound) playNext();
     } else if (sound) playNone();
   };
 
   const showPrev = () => {
-    if (currentPosition !== 0) {
-      const elementsToShow = Math.min(currentPosition, 5);
-
-      if (elementsToShow > 0) {
-        setPagIndex(pagIndex - 1);
-        setCurrentPosition(currentPosition - elementsToShow);
-        if (sound) playPrev();
-      }
+    if (pagIndex > 1) {
+      setPagIndex(pagIndex - 1);
+      setCurrentPosition(currentPosition - ITEMS_PER_PAGE);
+      if (sound) playPrev();
     } else if (sound) playNone();
   };
 
-  const slicedHistory = history.slice(currentPosition, currentPosition + 5);
+  // Lấy 5 item cho trang hiện tại, bắt đầu từ cuối mảng
+  const slicedHistory = history.slice(
+    Math.max(0, history.length - (currentPosition + ITEMS_PER_PAGE)),
+    history.length - currentPosition
+  );
 
   return (
     <div

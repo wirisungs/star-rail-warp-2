@@ -2,6 +2,17 @@
   "main": {
     "title": "Warp"
   },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "username": "Username",
+    "password": "Password",
+    "email": "Email",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "loginError": "Invalid username or password",
+    "registerError": "Username or email already exists"
+  },
   "modal": {
     "lang": { "title": "Choose Your Language" },
     "reset": {
