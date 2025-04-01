@@ -4,78 +4,47 @@ const warpEventEmitter = require('../patterns/WarpEventEmitter');
 const WarpController = require('../patterns/state/WarpController');
 
 class BannerService {
-  constructor(
-    warpStatsRepository,
-    pityStrategyFactory,
-    eventEmitter
-  ) {
-    this.warpStatsRepository = warpStatsRepository;
-    this.pityStrategyFactory = pityStrategyFactory;
-    this.eventEmitter = eventEmitter;
+  constructor() {
+    this.repository = null;
+    this.eventEmitter = null;
+    this.strategies = new Map();
     this.warpControllers = new Map();
   }
 
+  setRepository(repository) {
+    this.repository = repository;
+    return this;
+  }
+
+  setEventEmitter(eventEmitter) {
+    this.eventEmitter = eventEmitter;
+    return this;
+  }
+
+  setStrategy(type, strategy) {
+    this.strategies.set(type, strategy);
+    return this;
+  }
+
   getStrategy(bannerType) {
-    return this.pityStrategyFactory.createStrategy(bannerType);
+    return this.strategies.get(bannerType);
   }
 
   async getBannerState(userId, bannerType) {
-    try {
-      const stats = await this.warpStatsRepository.findOne({ userId, bannerType });
-      if (!stats) {
-        return {
-          pityFive: 0,
-          pityFour: 0,
-          guaranteeFive: false,
-          guaranteeFour: false
-        };
-      }
-
-      const strategy = this.getStrategy(bannerType);
-      const state = {
-        pityFive: stats.pity || 0,
-        pityFour: 0,
-        guaranteeFive: strategy.calculateGuarantee(stats.pity, 90, 75, 0.006),
-        guaranteeFour: false
-      };
-
-      // Emit banner state
-      this.eventEmitter.emit('banner_state_change', {
-        userId,
-        bannerType,
-        state
-      });
-      return state;
-    } catch (error) {
-      console.error('Error getting banner state:', error);
-      throw error;
-    }
+    return await this.repository.findOne({ userId, bannerType });
   }
 
   async updateBannerState(userId, bannerType, state) {
-    try {
-      const stats = await this.warpStatsRepository.findOneAndUpdate(
-        { userId, bannerType },
-        { $set: state },
-        { new: true, upsert: true }
-      );
-
-      // Emit banner state change
-      this.eventEmitter.emit('banner_state_change', {
-        userId,
-        bannerType,
-        state
-      });
-      return stats;
-    } catch (error) {
-      console.error('Error updating banner state:', error);
-      throw error;
-    }
+    return await this.repository.findOneAndUpdate(
+      { userId, bannerType },
+      { $set: state },
+      { new: true }
+    );
   }
 
   calculatePity(userId, bannerType, currentPity, maxPity, softPity, rate) {
-    const strategy = this.getStrategy(bannerType);
-    const pity = strategy.calculatePity(currentPity, maxPity, softPity, rate);
+    const pityStrategy = this.strategies.get('pity');
+    const pity = pityStrategy.calculate(currentPity, maxPity, softPity, rate);
 
     // Emit pity update
     this.eventEmitter.emit('pity_update', {
@@ -87,8 +56,8 @@ class BannerService {
   }
 
   calculateGuarantee(userId, bannerType, currentPity, maxPity, softPity, rate) {
-    const strategy = this.getStrategy(bannerType);
-    const isGuaranteed = strategy.calculateGuarantee(currentPity, maxPity, softPity, rate);
+    const guaranteeStrategy = this.strategies.get('guarantee');
+    const isGuaranteed = guaranteeStrategy.calculate(currentPity, maxPity, softPity, rate);
 
     // Emit guarantee update
     this.eventEmitter.emit('guarantee_update', {
@@ -115,13 +84,21 @@ class BannerService {
   }
 
   async startWarp(userId, bannerType) {
-    const controller = this.getWarpController(userId, bannerType);
-    await controller.startWarp();
+    const state = await this.getBannerState(userId, bannerType);
+    if (!state) {
+      throw new Error('Banner state not found');
+    }
+    this.eventEmitter.emit('warpStarted', { userId, bannerType });
+    return state;
   }
 
-  async completeWarp(userId, bannerType) {
-    const controller = this.getWarpController(userId, bannerType);
-    await controller.completeWarp();
+  async completeWarp(userId, bannerType, result) {
+    const state = await this.getBannerState(userId, bannerType);
+    if (!state) {
+      throw new Error('Banner state not found');
+    }
+    this.eventEmitter.emit('warpCompleted', { userId, bannerType, result });
+    return result;
   }
 
   async cancelWarp(userId, bannerType) {

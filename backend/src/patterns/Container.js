@@ -1,7 +1,7 @@
 const MongooseWarpStatsRepository = require('./repositories/MongooseWarpStatsRepository');
-const ConcretePityStrategyFactory = require('./factories/ConcretePityStrategyFactory');
+const ServiceFactory = require('./factories/ServiceFactory');
+const StrategyFactory = require('./factories/StrategyFactory');
 const ConcreteEventEmitter = require('./emitters/ConcreteEventEmitter');
-const BannerService = require('../services/BannerService');
 const LoggingDecorator = require('./decorators/LoggingDecorator');
 const CachingDecorator = require('./decorators/CachingDecorator');
 const chainBuilder = require('./chain/ChainBuilder');
@@ -13,38 +13,60 @@ class Container extends Singleton {
     if (this.initialized) return;
 
     this.services = new Map();
+    this.factories = new Map();
     this.initialized = false;
   }
 
   initialize() {
     if (this.initialized) return;
 
+    // Register factories
+    this.factories.set('service', new ServiceFactory());
+    this.factories.set('strategy', new StrategyFactory());
+
     // Register dependencies
     this.services.set('warpStatsRepository', new MongooseWarpStatsRepository());
-    this.services.set('pityStrategyFactory', new ConcretePityStrategyFactory());
     this.services.set('eventEmitter', ConcreteEventEmitter);
 
-    // Create base service
-    const baseService = new BannerService(
-      this.services.get('warpStatsRepository'),
-      this.services.get('pityStrategyFactory'),
-      this.services.get('eventEmitter')
-    );
+    // Create services using factories
+    const bannerService = this.factories.get('service').createService('banner');
+    const warpService = this.factories.get('service').createService('warp');
+    const authService = this.factories.get('service').createService('auth');
 
-    // Apply decorators
-    const loggedService = new LoggingDecorator(baseService);
-    const cachedService = new CachingDecorator(loggedService);
+    // Create strategies using factory
+    const pityStrategy = this.factories.get('strategy').createService('pity');
+    const guaranteeStrategy = this.factories.get('strategy').createService('guarantee');
+    const rateStrategy = this.factories.get('strategy').createService('rate');
 
-    // Register decorated service
-    this.services.set('bannerService', cachedService);
+    // Apply decorators to services
+    const loggedBannerService = new LoggingDecorator(bannerService);
+    const cachedBannerService = new CachingDecorator(loggedBannerService);
+
+    // Register decorated services
+    this.services.set('bannerService', cachedBannerService);
+    this.services.set('warpService', warpService);
+    this.services.set('authService', authService);
+
+    // Register strategies
+    this.services.set('pityStrategy', pityStrategy);
+    this.services.set('guaranteeStrategy', guaranteeStrategy);
+    this.services.set('rateStrategy', rateStrategy);
+
     this.initialized = true;
   }
 
-  getBannerService() {
+  getService(type) {
     if (!this.initialized) {
       this.initialize();
     }
-    return this.services.get('bannerService');
+    return this.services.get(type);
+  }
+
+  getFactory(type) {
+    if (!this.initialized) {
+      this.initialize();
+    }
+    return this.factories.get(type);
   }
 
   async executeRequest(request) {
@@ -52,11 +74,6 @@ class Container extends Singleton {
       this.initialize();
     }
     return chainBuilder.execute(request);
-  }
-
-  reset() {
-    this.services.clear();
-    this.initialized = false;
   }
 }
 

@@ -11,6 +11,7 @@ import PhonoModal from "./modals/PhonoModal";
 import LangModal from "./modals/LangModal";
 import { useTranslation } from "react-i18next";
 import soundService from "./services/SoundService";
+import { useAuth } from "../context/AuthContext";
 
 const Settings = ({
   vers,
@@ -25,6 +26,7 @@ const Settings = ({
   setBannerType,
 }) => {
   const { getWidth } = useContext(ResizeContext);
+  const { logout } = useAuth();
 
   const [showSettings, setShowSettings] = useState(false);
 
@@ -54,23 +56,9 @@ const Settings = ({
   };
 
   const handleLogout = () => {
-    fetch('/api/auth/logout', {
-      method: 'POST',
-      credentials: 'include',
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          window.location.href = '/login';
-        } else {
-          console.error('Logout failed:', data.message);
-        }
-      })
-      .catch(error => {
-        console.error('Logout error:', error);
-      });
+    if (sound) soundService.playSound('menu-select');
+    logout();
   };
-
 
   const { i18n } = useTranslation();
 
@@ -100,18 +88,41 @@ const Settings = ({
 
   return (
     <React.Fragment>
-      <LazyLoadImage
-        effect="opacity"
-        id="settings-button"
-        alt="Settings Button"
-        src="assets/menu/phone.webp"
-        width={getWidth(33, 18)}
-        onClick={() => {
-          handleShow();
-          if (sound) soundService.playSound('menu-select');
-        }}
-        draggable="false"
-      />
+      <div style={{
+        position: 'fixed',
+        right: '20px',
+        top: '20px',
+        zIndex: 1000,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}>
+        <div style={{ marginBottom: '50px' }}>
+          <LazyLoadImage
+            effect="opacity"
+            id="settings-button"
+            alt="Settings Button"
+            src="assets/menu/phone.webp"
+            width={getWidth(33, 18)}
+            onClick={() => {
+              handleShow();
+              if (sound) soundService.playSound('menu-select');
+            }}
+            draggable="false"
+          />
+        </div>
+        <div>
+          <LazyLoadImage
+            effect="opacity"
+            id="logout-button"
+            alt="Logout Button"
+            src="assets/menu/logout.png"
+            width={getWidth(33, 18)}
+            onClick={handleLogout}
+            draggable="false"
+          />
+        </div>
+      </div>
       <ResetModal show={showReset} setShow={setShowReset} />
       <VersionModal
         show={showVersion}
@@ -260,18 +271,6 @@ const Settings = ({
                 setShowLang(true);
               }}
             />
-            {/* <LazyLoadImage
-              effect="opacity"
-              alt="Logout Button"
-              className="menu-button"
-              src={`assets/menu/${i18n.resolvedLanguage}/logout.webp`}
-              draggable="false"
-              width={getWidth(114, 50)}
-              onClick={() => {
-                if (sound) soundService.playSound('button-select');
-                handleLogout();
-              }}
-            /> */}
           </div>
         </Offcanvas.Body>
       </Offcanvas>
